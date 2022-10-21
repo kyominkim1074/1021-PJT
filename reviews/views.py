@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.shortcuts import render, redirect
 from reviews.models import Review
 from .forms import ReviewForm
@@ -20,3 +19,11 @@ def create(request):
         "form": form,
     }
     return render(request, "reviews/create.html", context)
+
+
+def index(request):
+    reviews = Review.objects.order_by("-pk")
+    context = {
+        "reviews": reviews,
+    }
+    return render(request, "reviews/index.html", context)
