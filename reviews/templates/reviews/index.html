@@ -8,7 +8,40 @@
 
 {% block content %}
 <div class="container justify-content-center text-center">
-  <h1>list</h1>
+  <div class="d-block p-2 bg-dark text-white">
+    <h1 class="my-2 fw-bold">영화 리뷰 걀러리</h1>
+  </div>
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://dummyimage.com/1280x200/4a4a4a/fff.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://dummyimage.com/1280x200/000/fff.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://dummyimage.com/1280x200/bababa/000000.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
   <table class="table table-dark table-striped table-hover text-center">
     <thead>
       <tr>
@@ -21,7 +54,7 @@
       {% for review in reviews %}
       <tr>
         <td>
-          <a href="{% url 'reviews:detail' review.pk %}" class="text-center text-decoration text-white">
+          <a href="{% url 'reviews:detail' review.pk %}" class="text-center text-decoration-none text-white">
             {{ review.movie_name }}
           </a>
         </td>

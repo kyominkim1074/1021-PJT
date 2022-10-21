@@ -1,7 +1,7 @@
 from nntplib import ArticleInfo
 from django.shortcuts import render, redirect
-from reviews.models import Review
-from .forms import ReviewForm
+from reviews.models import Review, Comment
+from .forms import ReviewForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -36,8 +36,11 @@ def index(request):
 
 def detail(request, review_pk):
     review = Review.objects.get(pk=review_pk)
+    comment_form = CommentForm()
     context = {
         "review": review,
+        'comments': review.comment_set.all(),
+        'comment_form': comment_form
     }
     return render(request, "reviews/detail.html", context)
 
@@ -70,3 +73,27 @@ def delete(request, review_pk):
         return render(request, "reviews/detail.html")
     else:
         return redirect("reviews:detail", review.pk)
+
+
+@login_required
+def comment_create(request, review_pk):
+    review = Review.objects.get(pk=review_pk)
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.review = review
+        comment.user = request.user
+        comment.save()
+    return redirect("reviews:detail", review.pk)
+
+
+@login_required
+def comment_delete(request, review_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        if request.method == "POST":
+            comment.delete()
+            return redirect("reviews.detail", review_pk)
+    else:
+        messages.warning(request, "작성자만 삭제할 수 있습니다.")
+    return redirect("reviews:detail", review_pk)

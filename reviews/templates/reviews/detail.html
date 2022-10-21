@@ -14,15 +14,54 @@
   </h3>
   <p>{{ review.created_at|date:'SHORT_DATETIME_FORMAT' }} | {{ review.updated_at|date:'y-m-d D' }}</p>
   <p>{{ review.content }}</p>
-  {% if request.user.is_authenticated %}
-  <a href="{% url 'reviews:update' review.pk %}" class="btn btn-primary">수정</a>
-  <form action="{% url 'reviews:delete' review.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="삭제" class="btn btn-danger">
-  </form>
-  <a href="{% url 'reviews:index' %}" class="btn btn-secondary">뒤로가기</a>
-  {% else %}
-  <a href="{% url 'reviews:index' %}" class="btn btn-secondary">뒤로가기</a>
-  {% endif %}
+  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'reviews:update' review.pk %}" class="btn btn-primary my-1">수정</a>
+    <form action="{% url 'reviews:delete' review.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="삭제" class="btn btn-danger my-1 me-md-2">
+    </form>
+    <a href="{% url 'reviews:index' %}" class="btn btn-secondary my-1">뒤로가기</a>
+    {% else %}
+    <a href="{% url 'reviews:index' %}" class="btn btn-secondary">뒤로가기</a>
+    {% endif %}
+  </div>
+  <div class="container my-3">
+    <h4 class="my-3">댓글</h4>
+    {% if request.user.is_authenticated %}
+    <form action="{% url 'reviews:comment_create' review.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form layout='inline' %}
+      <input type="submit" class="my-3 btn btn-primary" value="OK">
+    </form>
+    {% endif %}
+  </div>
+  <ul class="bg-dark text-white border border-secondary">
+    <span class="f-bold">전체 댓글 | <span class="text-danger">{{ review.comment_set.count }}</span>개</span>
+    <div class="mx-4 ms-0">
+      {% for comment in comments %}
+      <li class="list-unstyled">
+        <div class="d-flex flex-row justify-content-between mx-2">
+          <div class="float-left">
+            <span>{{ comment.user }}</span> |
+            <span class="text-muted">{{ comment.created_at|date:'SHORT_DATETIME_FORMAT'}}</span>
+            <p>{{ comment.content }}</p>
+          </div>
+          <div class="float-right">
+            {% if request.user == comment.user %}
+            <form action="{% url 'reviews:comment_delete' review.pk comment.pk %}" method="POST">
+              {% csrf_token %}
+              <button class="btn btn-danger" type="submit">삭제</button>
+            </form>
+            {% else %}
+            <button type="button" class="btn btn-secondary" disabled>삭제</button>
+            {% endif %}
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </div>
+  </ul>
+  <hr>
 </div>
 {% endblock content %}

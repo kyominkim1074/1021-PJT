@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review
+from .models import Review, Comment
 
 
 class ReviewForm(forms.ModelForm):
@@ -12,3 +12,10 @@ class ReviewForm(forms.ModelForm):
             "movie_name": "영화 제목",
             "grade": "평점",
         }
+        exclude = ('user',)
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ("review", "user")

@@ -28,9 +28,6 @@
           <li class="nav-item">
             <a class="nav-link fw-bold" href="{% url 'reviews:create' %}">글 쓰기</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="#">계정</a>
-          </li>
         </ul>
         <ul class="navbar-nav">
           {% if request.user.is_authenticated %}
@@ -41,7 +38,7 @@
             <a class="nav-link fw-bold" href="{% url 'accounts:logout' %}">Logout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-bold" href="#">Update</a>
+            <a class="nav-link fw-bold" href="{% url 'accounts:update' %}">Update</a>
           </li>
           {% else %}
           <li class="nav-item">
