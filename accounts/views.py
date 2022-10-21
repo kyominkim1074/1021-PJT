@@ -6,10 +6,6 @@ from accounts.models import User
 # Create your views here.
 
 
-def index(request):
-    return render(request, "accounts/index.html")
-
-
 def signup(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
