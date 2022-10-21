@@ -3,12 +3,12 @@
 
 {% block content %}
 <div class="container my-4">
-  <h1 class="mb-4">리뷰 작성</h1>
+  <h1 class="mb-4">리뷰 수정</h1>
   <form method="POST">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% bootstrap_button button_type='submit' content='OK' %}
-    <a href="{% url 'reviews:index' %}" class="btn btn-secondary">돌아가기</a>
+    <a href="{% url 'reviews:detail' review.pk %}" class="btn btn-secondary">돌아가기</a>
   </form>
 </div>
 {% endblock %}

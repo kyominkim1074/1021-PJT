@@ -9,5 +9,35 @@
 {% block content %}
 <div class="container justify-content-center text-center">
   <h1>list</h1>
+  <table class="table table-dark table-striped table-hover text-center">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center ps-2">영화 제목</th>
+        <th scope="col" class="text-center ps-4">제목</th>
+        <th scope="col" class="text-center ps-4">평점</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+      <tr>
+        <td>
+          <a href="{% url 'reviews:detail' review.pk %}" class="text-center text-decoration text-white">
+            {{ review.movie_name }}
+          </a>
+        </td>
+        <td>
+          <p class="text-center text-decoration text-white">
+            {{ review.title }}
+          </p>
+        </td>
+        <td>
+          <p class="text-center text-decoration text-white">
+            {{ review.grade }}
+          </p>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock content %}
