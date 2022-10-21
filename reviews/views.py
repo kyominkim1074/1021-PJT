@@ -93,7 +93,7 @@ def comment_delete(request, review_pk, comment_pk):
     if request.user == comment.user:
         if request.method == "POST":
             comment.delete()
-            return redirect("reviews.detail", review_pk)
+            return redirect("reviews:detail", review_pk)
     else:
         messages.warning(request, "작성자만 삭제할 수 있습니다.")
-    return redirect("reviews:detail", review_pk)
+        return redirect("reviews:detail", review_pk)
