@@ -14,6 +14,10 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = ProcessedImageField(upload_to='images/', blank=True,
+                            processors=[ResizeToFill(1200, 960)],
+                            format='JPEG',
+                            options={'quality': 80})
 
 class Comment(models.Model):
     content = models.CharField(max_length=80)

@@ -11,7 +11,7 @@ from django.contrib import messages
 @login_required
 def create(request):
     if request.method == "POST":
-        form = ReviewForm(request.POST)
+        form = ReviewForm(request.POST, request.FILES)
         if form.is_valid():
             review = form.save(commit=False)
             review.user = request.user

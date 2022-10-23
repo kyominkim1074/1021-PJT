@@ -8,12 +8,17 @@
 
 {% block content %}
 <div class="container mt-5">
-  <h1 class="mb-4">{{ review.title }}</h1>
-  <h3 class="fw-bold fs-4">
-    {{ review.user.username }}
-  </h3>
-  <p>{{ review.created_at|date:'SHORT_DATETIME_FORMAT' }} | {{ review.updated_at|date:'y-m-d D' }}</p>
-  <p>{{ review.content }}</p>
+  <div>
+    <h1 class="mb-4">{{ review.title }}</h1>
+    <h3 class="fw-bold fs-4">
+      {{ review.user.username }}
+    </h3>
+    <p>{{ review.created_at|date:'SHORT_DATETIME_FORMAT' }} | {{ review.updated_at|date:'y-m-d D' }}</p>
+    <p>{{ review.content }}</p>
+    {% if review.image %}
+    <img src="{{ review.image.url }}" alt="{{ review.image }}" width="400" height="300">
+    {% endif %}
+  </div>
   <div class="d-grid gap-2 d-md-flex justify-content-md-start">
     {% if request.user.is_authenticated %}
     <a href="{% url 'reviews:update' review.pk %}" class="btn btn-primary my-1">수정</a>
